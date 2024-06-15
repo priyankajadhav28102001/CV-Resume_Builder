@@ -1,0 +1,87 @@
+{% include "core/navbar.html" %}
+{% load static %}
+<div id="content-wrapper" class="mt-4" style="padding-top:1%;">
+    <div class="container-fluid">
+        <div class="mb-2 col-md-6">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Description</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <input type="hidden" value={{request.user.cv.id}} id="cv_id">
+                        {% if user_project %}
+                        {% for proje in user_project %}
+                        <tr>
+                            <td>{{proje.p_projectname}}</td>
+                            <td>{{proje.p_description}}</td>
+                            <td>{{proje.p_startdate}}</td>
+                            <td>{{proje.p_enddate}}</td>
+
+                            <td>
+                                <input class="btn btn-warning btn-sm btn-edit" data-id="{{proje.id}}" value="Edit" type="button">
+                            </td>
+
+                            <td>
+                                <input class="btn btn-danger btn-sm btn-delete" data-id="{{proje.id}}" value="Delete" type="button">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+
+            </div>
+            <div id="save_project_status"></div>
+            <br>
+            <br>
+
+            <div class="update_project_info" style="display:none;">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Description</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            <input type="hidden" id="project_id">
+                            <tr>
+                                <td>
+                                    <input type="text" id="projectname" class="form-control"/>
+                                </td>
+
+                                <td>
+                                    <input type="text" id="description" class="form-control"/>
+                                </td>
+                                <td>
+                                    <input type="text" id="startdate" class="form-control"/>
+                                </td>
+                                <td>
+                                    <input type="text" id="enddate" class="form-control"/>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-success" id="save_project">Update</button>
+                    <button class="btn btn-info" id="close_project">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% include "core/edit_cv_script.html" %}

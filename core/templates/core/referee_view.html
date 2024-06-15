@@ -1,0 +1,82 @@
+{% include "core/navbar.html" %}
+{% load static %}
+<div id="content-wrapper" class="mt-4" style="padding-top:1%;">
+    <div class="container-fluid">
+        <div class="mb-2 col-md-6">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <input type="hidden" value={{request.user.cv.id}} id="cv_id">
+                        {% if user_referee %}
+                        {% for ref in user_referee %}
+                        <tr>
+                            <td>{{ref.r_name}}</td>
+                            <td>{{ref.r_email}}</td>
+                            <td>{{ref.r_phone}}</td>
+                            
+                            <td>
+                                <input class="btn btn-warning btn-sm btn-edit-ref" data-id="{{ref.id}}" value="Edit" type="button">
+                            </td>
+
+                            <td>
+                                <input class="btn btn-danger btn-sm btn-delete" data-id="{{ref.id}}" value="Delete" type="button">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+
+            </div>
+            <div id="save_referee_status"></div>
+            <br>
+            <br>
+
+            <div class=".update_referee_info" style="display:none;">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            <input type="hidden" id="referee_id">
+                            <tr>
+                                <td>
+                                    <input type="text" id="name" class="form-control"/>
+                                </td>
+
+                                <td>
+                                    <input type="text" id="email" class="form-control"/>
+                                </td>
+                                <td>
+                                    <input type="text" id="phone" class="form-control"/>
+                                </td>
+                               
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-success" id="save_referee">Update</button>
+                    <button class="btn btn-info" id="close_referee">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% include "core/edit_cv_script.html" %}

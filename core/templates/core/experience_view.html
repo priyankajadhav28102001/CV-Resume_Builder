@@ -1,0 +1,81 @@
+{% include "core/navbar.html" %}
+{% load static %}
+<div id="content-wrapper" class="mt-4" style="padding-top:1%;">
+    <div class="container-fluid">
+        <div class="mb-2 col-md-6">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Office</th>
+                            <th>Duration</th>
+                            <th>Position</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <input type="hidden" value={{request.user.cv.id}} id="cv_id">
+                        {% if user_experience %}
+                        {% for exper in user_experience %}
+                        <tr>
+                            <td>{{exper.e_office}}</td>
+                            <td>{{exper.e_duration}}</td>
+                            <td>{{exper.e_position}}</td>
+
+                            <td>
+                                <input class="btn btn-warning btn-sm btn-edit" data-id="{{exper.id}}" value="Edit" type="button">
+                            </td>
+
+                            <td>
+                                <input class="btn btn-danger btn-sm btn-delete" data-id="{{exper.id}}" value="Delete" type="button">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+
+            </div>
+            <div id="save_experience_status"></div>
+            <br>
+            <br>
+
+            <div class="update_experience_info" style="display:none;">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Office</th>
+                                <th>Duration</th>
+                                <th>Position</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            <input type="hidden" id="experience_id">
+                            <tr>
+                                <td>
+                                    <input type="text" id="office" class="form-control"/>
+                                </td>
+
+                                <td>
+                                    <input type="text" id="duration" class="form-control"/>
+                                </td>
+                                <td>
+                                    <input type="text" id="position" class="form-control"/>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-success" id="save_experience">Update</button>
+                    <button class="btn btn-info" id="close_experience">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% include "core/edit_cv_script.html" %}
