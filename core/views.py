@@ -6,7 +6,7 @@ from django.contrib import messages,auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,logout
 from django.template import context
-from .models import Skill,Academic,Referee,Profile,User,Skill,Cv,Experience,Project
+from .models import Skill,Academic,Referee,Profile,User,Skill,Cv,Experience,Project,Certificate
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.hashers import make_password
 from django.urls import path
@@ -112,6 +112,29 @@ def saveEducation(request):
                 a.save()
             return JsonResponse({'status':1})
     return JsonResponse({'status':0})
+
+def saveCertificate(request):
+    if request.method =='POST':
+        name= request.POST.getlist('name[]')
+        year =request.POST.getlist('year[]')
+        
+
+        user_id =request.user.id 
+        cv_id = Cv.objects.filter(user_id=user_id).values_list('id',flat=True)
+        cv_id =list(cv_id)
+        cv_id =cv_id[0]
+
+        if(len(name)==1):
+            a = Certificate(c_certificate = name[0], c_year=year[0],cv_id=cv_id)
+            a.save()
+            return JsonResponse({'status':1})
+        else:
+            for x,y in zip(name,year):
+                a = Certificate(c_certificate=x, c_year=y,cv_id=cv_id)
+                a.save()
+            return JsonResponse({'status':1})
+    return JsonResponse({'status':0})
+
 
 def saveExperience(request):
     if request.method =='POST':
@@ -235,6 +258,13 @@ def updateAcademic(request):
     Academic.objects.filter(id=id).update(a_institution=institution, a_year=year, a_award=award)
     return JsonResponse({'status':1})
 
+def updateCertificate(request):
+    id= request.POST.get('id')
+    certificate =request.POST.get('certificate')
+    year =request.POST.get('year')
+    Certificate.objects.filter(id=id).update(c_certificate=certificate, c_year=year)
+    return JsonResponse({'status':1})
+
 def updateExperience(request):
     id= request.POST.get('id')
     office =request.POST.get('office')
@@ -312,8 +342,9 @@ def viewPDF(request,id=None):
     user_education = Academic.objects.filter(cv_id=id).values()
     user_experience = Experience.objects.filter(cv_id=id).values()
     user_project = Project.objects.filter(cv_id=id).values()
+    user_certificate = Certificate.objects.filter(cv_id=id).values()
 
-    context={'user_profile':user_profile,'user_skill':user_skill,'user_referee':user_referee,'user_education':user_education,'user_experience':user_experience,'user_project':user_project}
+    context={'user_profile':user_profile,'user_skill':user_skill,'user_referee':user_referee,'user_education':user_education,'user_experience':user_experience,'user_project':user_project,'user_certificate':user_certificate}
     return render(request,'core/pdf_template.html',context)
 
 def editCv(request):
@@ -348,6 +379,17 @@ def fetchAcademic(request):
                     'award':user_education.a_award
                     }
     return JsonResponse(user_education)
+
+def fetchCertificate(request):
+    id = request.POST.get('id')
+    print('CV ID is',id)
+
+    user_certificate = Certificate.objects.get(id=id)
+    
+    user_certificate={'certificate':user_certificate.c_certificate,
+                    'year':user_certificate.c_year,
+                    }
+    return JsonResponse(user_certificate)
 
 def fetchExperience(request):
     id = request.POST.get('id')
@@ -440,6 +482,17 @@ def deleteAcademic(request):
     else:
         return JsonResponse({'status':0})
     
+def deleteCertificate(request):
+    if request.method == 'POST':
+        id= request.POST.get('id')
+        print('Cv ID is',id)
+
+        user_certificate = Certificate.objects.get(id=id)
+        user_certificate.delete()
+        return JsonResponse({'status':1})
+    else:
+        return JsonResponse({'status':0})    
+    
 def deleteExperience(request):
     if request.method == 'POST':
         id= request.POST.get('id')
@@ -469,6 +522,13 @@ def educationView(request):
     user_education = Academic.objects.filter(cv_id=id).all()
     context = {'user_education':user_education}
     return render(request, 'core/education_view.html', context)
+
+def certificateView(request):
+    id =request.user.cv.id 
+    print('Cv ID is',id)
+    user_certificate = Certificate.objects.filter(cv_id=id).all()
+    context = {'user_certificate':user_certificate}
+    return render(request, 'core/certificate_view.html', context)
 
 def experienceView(request):
     id =request.user.cv.id 

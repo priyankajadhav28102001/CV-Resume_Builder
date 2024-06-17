@@ -98,6 +98,19 @@
                             </td>
                         </tr>
 
+                        <tr>
+                            <td>Certificate</td>
+                            <td>
+                                <a href="{%url 'cer-view'%}"><button class="btn btn-primary" id="cer_click">Edit</button></a>
+                            </td>
+                            <td>
+                                <a href="{% url 'cv-detail' id=request.user.cv.id %}"><button class="btn btn-success">View</button></a>
+                            </td>
+                            <td>
+                                <a href=""><button class="btn btn-danger">Delete</button></a>
+                            </td>
+                        </tr>
+
                     </tbody>
 
                 </table>

@@ -355,7 +355,98 @@
                     $('#update_result').append('Profile Deleted Successfully');
                 }
             })
-        })                          
+        })
+        
+          //Certificate edit delete 
+        $('#close_certificate').click(function(e){
+            e.preventDefault()
+            $('.update_certificate_info').hide()
+        })
+
+        $('.btn-edit').click(function(e){
+            e.preventDefault()
+            let id= $(this).attr("data-id");
+            console.log('Certificate ID is',id)
+
+            $('#certificate_id').val(id)
+
+            $('.update_certificate_info').show()
+            data ={id:id, csrfmiddlewaretoken:'{{csrf_token}}'}
+
+            $.ajax({
+                url: "{% url 'fetchcertificate' %}",
+                method :"POST",
+                data:data,
+
+                success: function(data){
+                    console.log(data);
+                    $('#certificate').val(data.certificate);
+                    $('#year').val(data.year);
+                }
+            })
+        })
+        $('#save_certificate').click(function(e){
+            e.preventDefault()
+            let id = $('#certificate_id').val()
+            console.log('Save certificate ID is',id)
+
+            $('.update_certificate_info').show()
+            let certificate =$('#certificate').val()
+            let year =$('#year').val()
+            
+
+            data={id:id, csrfmiddlewaretoken:'{{csrf_token}}', certificate:certificate, year:year}
+
+            $.ajax({
+                url: "{% url 'update_certificate'%}",
+                method:"POST",
+                data:data,
+
+                success: function(){
+                    $('#save_certificate_status').html('');
+                    $('.update_certificate_info').hide()
+                    $('#save_certificate_status').append('Certificate Information Updated Successfully');
+                }
+            })
+        })
+
+        $('.btn-delete').click(function(e){
+            e.preventDefault()
+            let id = $(this).attr("data-id");
+            console.log('Certificate ID is',id)
+
+            data ={id:id,csrfmiddlewaretoken:'{{csrf_token}}'}
+
+            $.ajax({
+                url:"{% url 'delete_certificate'%}",
+                method:"POST",
+                data:data,
+                success:function(){
+                    $('#save_certificate_status').html('');
+                    $('#save_certificate_status').append('Certificate Information Deleted Successfully');
+
+
+                }
+            })
+        })
+
+        $('#del_btn').click(function(e){
+            e.preventDefault()
+            let id= $('#cv_id').val()
+            console.log('CV Id is',id)
+            data ={id:id, csrfmiddlewaretoken:'{{csrf_token}}'}
+
+            $.ajax({
+                url:"{% url 'profile-delete' %}",
+                method:"POST",
+                data:data,
+
+                success:function(){
+                    $('#result_result').html('');
+                    $('#update_result').append('Profile Deleted Successfully');
+                }
+            })
+        })
                                         
                                           //Referee edit delete
         $('#close_referee').click(function(e){

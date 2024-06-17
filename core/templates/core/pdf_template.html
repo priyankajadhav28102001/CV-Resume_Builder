@@ -139,6 +139,29 @@
             </tbody>
         </table>
 
+        <h1 style="margin:0;">Certificate</h1>
+        <table class="table" id="table_skill">
+            <thead>
+                <tr>
+                    <th style="background-color:#57B223; width:10%;">#</th>
+                    <th scope="col">Certificate</th>
+                    <th scope="col">Year</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% if user_certificate %}
+                {% for cer in user_certificate %}
+                <tr>
+                    <th style="background-color: #57B223; width:10%;">{{forloop.counter}}</th>
+                    <th scope="col">{{cer.c_certificate}}</th>
+                    <th scope="col">{{cer.c_year}}</th>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+
         <h1 style="margin:0;">Referees</h1> 
         <table class="table" id="table_skill">
             <thead>

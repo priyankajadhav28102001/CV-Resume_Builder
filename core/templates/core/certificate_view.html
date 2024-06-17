@@ -1,0 +1,74 @@
+{% include "core/navbar.html" %}
+{% load static %}
+<div id="content-wrapper" class="mt-4" style="padding-top:1%;">
+    <div class="container-fluid">
+        <div class="mb-2 col-md-6">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Certificate</th>
+                            <th>Year</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <input type="hidden" value={{request.user.cv.id}} id="cv_id">
+                        {% if user_certificate %}
+                        {% for cer in user_certificate %}
+                        <tr>
+                            <td>{{cer.c_certificate}}</td>
+                            <td>{{cer.c_year}}</td>
+                            <td>
+                                <input class="btn btn-warning btn-sm btn-edit" data-id="{{cer.id}}" value="Edit" type="button">
+                            </td>
+
+                            <td>
+                                <input class="btn btn-danger btn-sm btn-delete" data-id="{{cer.id}}" value="Delete" type="button">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+
+            </div>
+            <div id="save_certificate_status"></div>
+            <br>
+            <br>
+
+            <div class="update_certificate_info" style="display:none;">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Certificate</th>
+                                <th>Year</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            <input type="hidden" id="certificate_id">
+                            <tr>
+                                <td>
+                                    <input type="text" id="certificate" class="form-control"/>
+                                </td>
+
+                                <td>
+                                    <input type="text" id="year" class="form-control"/>
+                                </td>
+                                
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-success" id="save_certificate">Update</button>
+                    <button class="btn btn-info" id="close_certificate">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% include "core/edit_cv_script.html" %}

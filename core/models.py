@@ -50,6 +50,16 @@ class Academic(models.Model):
     def __str__(self) -> str:
         return self.a_institution
     
+class Certificate(models.Model):
+    cv= models.ForeignKey(Cv,on_delete=models.CASCADE)
+    c_certificate =models.CharField(max_length=500)
+    c_year =models.CharField(max_length=500) 
+
+    def __str__(self) -> str:
+        return self.c_certificate
+    
+
+    
 class Referee(models.Model):
     cv= models.ForeignKey(Cv,on_delete=models.CASCADE)
     r_name =models.CharField(max_length=500) 

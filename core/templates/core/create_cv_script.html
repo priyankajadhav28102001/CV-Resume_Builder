@@ -64,6 +64,7 @@
         $('#ref_save').hide();
         $('#exp_save').hide();
         $('#pro_save').hide();
+        $('#cer_save').hide();
 
         //Value for skill Form 
         var a = 0
@@ -75,6 +76,8 @@
         var d = 0
         //Value for project Form
         var f = 0
+        //Value for certificate Form
+        var g = 0
 
         //Incriment skill Form
         $('#skill_add').click(function(e){
@@ -107,6 +110,14 @@
             appendProRow();
             f++;
             $('#pro_save').show();
+        });
+
+        //Incriment certificate Form
+        $('#cer_add').click(function(e){
+            e.preventDefault();
+            appendCerRow();
+            g++;
+            $('#cer_save').show();
         });
 
         //Incriment referee Form
@@ -263,6 +274,30 @@
 
             );
         }
+        //Append certificate form 
+        function appendCerRow(){
+            $('#wrapper_cer').append(
+                '<div id="'+g+'" class="form-group">'+
+                    '<div class="row" id="'+g+'">'+
+                        '<div class="col" id="'+g+'">'+
+                            '<label> Certificate Name</label>'+
+                            '<input type="Enter Certificate Name" name="name" class="form-control"/>'+
+                            '</div>'+
+
+                            '<div class="col" id="'+g+'">' +
+                                '<label>Year</label>' +
+                                '<input type="Enter Year" name="year" class="form-control" />' +
+                            '</div>' +
+
+                            '<div id="'+g+'" class="cer_del_btn col">' +
+                                '<button class=" btn btn-danger">Delete</button>' +
+                                '</div>' +
+                            '</div>' +
+                            '</div>'          
+
+            );
+        }
+
 
         //Referee delete form
         $('#wrapper_ref').on('click','.ref_del_btn',function(e){
@@ -303,6 +338,16 @@
             f--;
             if(a===0){
                 $('#pro_save').hide();
+            }
+        });
+        //Certificate delete form
+        $('#wrapper_cer').on('click','.cer_del_btn',function(e){
+            e.preventDefault();
+            var c_id = e.currentTarget.id;
+            $('div[id='+c_id+']').remove()
+            g--;
+            if(a===0){
+                $('#cer_save').hide();
             }
         });
         
@@ -669,5 +714,71 @@
                 })
             }
         });
+
+        //save certificate
+        $('#cer_save').click(function(e){
+            e.preventDefault();
+            var formData= $('.form_cer').serializeObject()
+
+            var obj;
+            var nameArray=[]
+            var yearArray=[]
+            
+
+            if(Array.isArray(formData.name)){
+                for(var i=0; i<formData.name.length; i++){
+                    obj= {}
+                    obj.name= formData.name[i]
+                    obj.year= formData.year[i]
+                    
+
+                    nameArray.push(formData.name[i])
+                    yearArray.push(formData.year[i])
+                    console.log('Certificate name',nameArray)
+                }
+                $.ajax({
+                    type:'POST',
+                    url:'{% url "cer-save" %}',
+                    headers:{'X-CSRFToken':'{{csrf_token}}'},
+                    data:{'name':nameArray, 'year':yearArray},
+
+                    success:function(data){
+                        x=data.status
+                        if(x==1){
+                            alert('Multiple Certificate Data Saved')
+                        }else {
+                            alert('Multiple Certificate Data Not Saved')
+                        }
+                    }
+                })
+
+            }else{
+                obj={}
+                obj.name= formData.name
+                obj.year= formData.year
+            
+
+                nameArray.push(formData.name)
+                yearArray.push(formData.year)
+                
+
+                $.ajax({
+                    type:'POST',
+                    url:'{% url "cer-save" %}',
+                    headers:{'X-CSRFToken':'{{csrf_token}}'},
+                    data:{'name':nameArray, 'year':yearArray},
+                    
+                    success:function(data){
+                        x=data.status
+                        if(x==1){
+                            alert('Single Certificate Data Saved')
+                        }else {
+                            alert('Single Certificate Data Not Saved')
+                        }
+                    }
+                })
+            }
+        });
+
     });
 </script>

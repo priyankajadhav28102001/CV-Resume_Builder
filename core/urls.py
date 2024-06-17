@@ -13,6 +13,7 @@ urlpatterns = [
     path('skill-save/', views.saveSkill, name="skill-save"),
     path('edu-save/', views.saveEducation, name="edu-save"),
     path('exp-save/', views.saveExperience, name="exp-save"),
+    path('cer-save/', views.saveCertificate, name="cer-save"),
     path('pro-save/', views.saveProject, name="pro-save"),
     path('ref-save/', views.saveReferee, name="ref-save"),
     path('profile-save/', views.uploadProfile, name="profile-save"),
@@ -55,6 +56,12 @@ urlpatterns = [
     path('cv-edit/proview/project/', views.fetchProject, name="fetchproject"),
     path('cv-edit/proview/update_project/', views.updateProject, name="update_project"),
     path('cv-edit/proview/delete_project/', views.deleteProject, name="delete_project"),
+
+    #^    Certificate fetch,update,delete
+    path('cv-edit/cerview/', views.certificateView, name="cer-view"),
+    path('cv-edit/cerview/certificate/', views.fetchCertificate, name="fetchcertificate"),
+    path('cv-edit/cerview/update_certificate/', views.updateCertificate, name="update_certificate"),
+    path('cv-edit/cerview/delete_certificate/', views.deleteCertificate, name="delete_certificate"),
 
 
 ]
