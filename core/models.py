@@ -25,7 +25,9 @@ class Experience(models.Model):
     cv= models.ForeignKey(Cv,on_delete=models.CASCADE)
     e_office =models.CharField(max_length=500)
     e_position =models.CharField(max_length=500)
-    e_duration =models.CharField(max_length=500) 
+    e_responsibilities =models.CharField(max_length=500)
+    e_startdate = models.DateField(null=True, blank=True)
+    e_enddate = models.DateField(null=True, blank=True)
 
     def __str__(self) -> str:
         return self.e_office
@@ -82,7 +84,7 @@ class Profile(models.Model):
      occupation =models.CharField(max_length=500)
      dob =models.DateField(default="None")
      bio =models.TextField()
-     avator =models.ImageField(upload_to='profile/',default='profile/avator.png',null=True)
+    
 
      def __str__(self) -> str:
          return self.fname

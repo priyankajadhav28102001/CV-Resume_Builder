@@ -224,13 +224,23 @@
                             '</div>'+
 
                             '<div class="col" id="'+d+'">' +
-                                '<label>Duration</label>' +
-                                '<input type="Enter Duration" name="duration" class="form-control" />' +
+                                '<label>Position</label>' +
+                                '<input type="Enter Position Name" name="position" class="form-control" />' +
                             '</div>' +
 
                             '<div class="col" id="'+d+'">' +
-                                '<label>Position</label>' +
-                                '<input type="Enter Position Name" name="position" class="form-control" />' +
+                                '<label>Responsibilities</label>' +
+                                '<input type="Enter Responsibilities" name="responsibilities" class="form-control" />' +
+                            '</div>' +
+
+                            '<div class="col" id="'+d+'">' +
+                                '<label>Start Date</label>' +
+                                '<input type="Enter Start Date" name="startdate" class="form-control" />' +
+                            '</div>' +
+
+                            '<div class="col" id="'+d+'">' +
+                                '<label>End Date</label>' +
+                                '<input type="Enter End Date" name="enddate" class="form-control" />' +
                             '</div>' +
 
                             '<div id="'+d+'" class="exp_del_btn col">' +
@@ -586,26 +596,32 @@
 
             var obj;
             var nameArray=[]
-            var durationArray=[]
             var positionArray=[]
+            var responsibilitiesArray=[]
+            var startdateArray=[]
+            var enddateArray=[]
 
             if(Array.isArray(formData.name)){
                 for(var i=0; i<formData.name.length; i++){
                     obj= {}
                     obj.name= formData.name[i]
-                    obj.duration= formData.duration[i]
                     obj.position= formData.position[i]
+                    obj.responsibilities= formData.responsibilities[i]
+                    obj.startdate= formData.startdate[i]
+                    obj.enddate= formData.enddate[i]
 
                     nameArray.push(formData.name[i])
-                    durationArray.push(formData.duration[i])
                     positionArray.push(formData.position[i])
+                    responsibilitiesArray.push(formData.responsibilities[i])
+                    startdateArray.push(formData.startdate[i])
+                    enddateArray.push(formData.enddate[i])
                     console.log('Office name',nameArray)
                 }
                 $.ajax({
                     type:'POST',
                     url:'{% url "exp-save" %}',
                     headers:{'X-CSRFToken':'{{csrf_token}}'},
-                    data:{'name':nameArray, 'duration':durationArray, 'position':positionArray},
+                    data:{'name':nameArray,'position':positionArray, 'responsibilities':responsibilitiesArray,'startdate':startdateArray,'enddate':enddateArray},
 
                     success:function(data){
                         x=data.status
@@ -620,18 +636,22 @@
             }else{
                 obj={}
                 obj.name= formData.name
-                obj.duration= formData.duration
                 obj.position=formData.position
+                obj.responsibilities= formData.responsibilities
+                obj.startdate= formData.startdate
+                obj.enddate= formData.enddate
 
                 nameArray.push(formData.name)
-                durationArray.push(formData.duration)
                 positionArray.push(formData.position)
+                responsibilitiesArray.push(formData.responsibilities)
+                startdateArray.push(formData.startdate)
+                enddateArray.push(formData.enddate)
 
                 $.ajax({
                     type:'POST',
                     url:'{% url "exp-save" %}',
                     headers:{'X-CSRFToken':'{{csrf_token}}'},
-                    data:{'name':nameArray, 'duration':durationArray, 'position':positionArray},
+                    data:{'name':nameArray,'position':positionArray, 'responsibilities':responsibilitiesArray,'startdate':startdateArray,'enddate':enddateArray},
 
                     success:function(data){
                         x=data.status

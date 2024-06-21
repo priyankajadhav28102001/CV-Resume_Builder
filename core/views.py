@@ -139,8 +139,10 @@ def saveCertificate(request):
 def saveExperience(request):
     if request.method =='POST':
         name= request.POST.getlist('name[]')
-        duration =request.POST.getlist('duration[]')
         position = request.POST.getlist('position[]')
+        responsibilities =request.POST.getlist('responsibilities[]')
+        startdate =request.POST.getlist('startdate[]')
+        enddate =request.POST.getlist('enddate[]')
 
         user_id =request.user.id 
         cv_id = Cv.objects.filter(user_id=user_id).values_list('id',flat=True)
@@ -148,12 +150,12 @@ def saveExperience(request):
         cv_id =cv_id[0]
 
         if(len(name)==1):
-            a = Experience(e_office = name[0], e_duration=duration[0],e_position=position[0], cv_id=cv_id)
+            a = Experience(e_office = name[0],e_position=position[0],e_responsibilities=responsibilities[0],e_startdate=startdate[0],e_enddate=enddate[0], cv_id=cv_id)
             a.save()
             return JsonResponse({'status':1})
         else:
-            for x,y,z in zip(name,duration,position):
-                a = Experience(e_office=x, e_duration=y, e_position=z,cv_id=cv_id)
+            for x,y,z,w,v in zip(name,position,responsibilities,startdate,enddate):
+                a = Experience(e_office=x,e_position=y,e_responsibilities=z,e_startend=w,e_enddate=v,cv_id=cv_id)
                 a.save()
             return JsonResponse({'status':1})
     return JsonResponse({'status':0})
@@ -218,7 +220,7 @@ def uploadProfile(request):
     occupation  = request.POST.get('occupation')
     country  = request.POST.get('country')
     region  = request.POST.get('region')
-    file  = request.FILES.get('file')
+    file =request.FILES.get('file')
     user_id  = request.user.id 
 
     Cv.objects.create(user_id=user_id)
@@ -228,7 +230,7 @@ def uploadProfile(request):
     cv_id = cv_id[0]
     print('Cv Id is',cv_id)
 
-    p=Profile(fname=fname, mname=mname,lname=lname ,email=email ,bio=bio, dob=dob, gender=gender, occupation=occupation, country=country, region=region, avator=file, phone=phone, cv_id=cv_id)
+    p=Profile(fname=fname, mname=mname,lname=lname ,email=email ,bio=bio, dob=dob, gender=gender, occupation=occupation, country=country, region=region,avator=file, phone=phone, cv_id=cv_id)
     p.save()
     return JsonResponse({'status':1})
 
@@ -268,10 +270,12 @@ def updateCertificate(request):
 def updateExperience(request):
     id= request.POST.get('id')
     office =request.POST.get('office')
-    duration =request.POST.get('duration')
     position =request.POST.get('position')
+    responsibilities =request.POST.get('responsibilities')
+    startdate =request.POST.get('startdate')
+    enddate =request.POST.get('enddate')
 
-    Experience.objects.filter(id=id).update(e_office=office, e_duration=duration, e_position=position)
+    Experience.objects.filter(id=id).update(e_office=office, e_position=position, e_responsibilities=responsibilities, e_startdate=startdate, e_enddate=enddate)
     return JsonResponse({'status':1})
 
 def updateProject(request):
@@ -299,13 +303,14 @@ def updateProfile(request):
     country  = request.POST.get('country')
     region  = request.POST.get('region')
     file  = request.FILES.get('file')
+    
 
     user_id  = request.user.id 
     cv_id = Cv.objects.filter(user_id=user_id).values_list('id',flat=True)
     cv_id = list(cv_id)
     cv_id = cv_id[0]
 
-    Profile.objects.filter(cv_id=id).update(fname=fname, mname=mname,lname=lname,email=email, bio=bio, dob=dob, gender=gender, occupation=occupation, country=country, region=region, avator=file, phone=phone, cv_id=cv_id)
+    Profile.objects.filter(cv_id=id).update(fname=fname, mname=mname,lname=lname,email=email, bio=bio, dob=dob, gender=gender, occupation=occupation, country=country, region=region,avator=file, phone=phone, cv_id=cv_id)
     return JsonResponse({'status':1})
 
 def registerView(request):
@@ -398,8 +403,10 @@ def fetchExperience(request):
     user_experience = Experience.objects.get(id=id)
     
     user_experience={'office':user_experience.e_office,
-                    'duration':user_experience.e_duration,
-                    'position':user_experience.e_position
+                    'position':user_experience.e_position,
+                    'responsibilities':user_experience.e_responsibilities,
+                    'startdate':user_experience.e_startdate,
+                    'enddate':user_experience.e_enddate
                     }
     return JsonResponse(user_experience)
 

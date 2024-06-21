@@ -8,8 +8,10 @@
                     <thead>
                         <tr>
                             <th>Office</th>
-                            <th>Duration</th>
                             <th>Position</th>
+                            <th>Responsibilities</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -20,8 +22,10 @@
                         {% for exper in user_experience %}
                         <tr>
                             <td>{{exper.e_office}}</td>
-                            <td>{{exper.e_duration}}</td>
                             <td>{{exper.e_position}}</td>
+                            <td>{{exper.e_responsibilities}}</td>
+                            <td>{{exper.e_startdate}}</td>
+                            <td>{{exper.e_enddate}}</td>
 
                             <td>
                                 <input class="btn btn-warning btn-sm btn-edit" data-id="{{exper.id}}" value="Edit" type="button">
@@ -47,8 +51,10 @@
                         <thead>
                             <tr>
                                 <th>Office</th>
-                                <th>Duration</th>
                                 <th>Position</th>
+                                <th>Responsibilities</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
                                 
                             </tr>
                         </thead>
@@ -58,12 +64,17 @@
                                 <td>
                                     <input type="text" id="office" class="form-control"/>
                                 </td>
-
-                                <td>
-                                    <input type="text" id="duration" class="form-control"/>
-                                </td>
                                 <td>
                                     <input type="text" id="position" class="form-control"/>
+                                </td>
+                                <td>
+                                    <input type="text" id="responsibilities" class="form-control"/>
+                                </td>
+                                <td>
+                                    <input type="text" id="startdate" class="form-control"/>
+                                </td>
+                                <td>
+                                    <input type="text" id="enddate" class="form-control"/>
                                 </td>
 
                             </tr>

@@ -13,7 +13,7 @@
              
              <h3 class="card text-primary">Click On Add, To Add Form Then Fill In Your Details And Submit</h3>
              <br/>
-
+             
              {% if status == 'no_profile' %}
              <p class="text-danger">After Creating A Profile, You Can Start Filling Other details. Like education background and Referees</p>
              <h1 class="card">Provide Basic Provide Information</h1>
@@ -99,10 +99,12 @@
                                         <input type="file" id="file"  name="file" class="form-control" />
                                     </div>
                                     </div>
-                                    </div>
-            <img src="{% static 'img/spinner.gif' %}" style="width: 50%; padding-top: 0%; display: none;" id="loading_spinner"> 
+                                </div>
+                                    
+            {% comment %} <img src="{% static 'img/spinner.gif' %}" style="width: 50%; padding-top: 0%; display: none;" id="loading_spinner"> {% endcomment %}
             <div id="result"></div>
-            <br/>
+        
+             <br/>
 
             <button id="profile_save" class="btn btn-primary">Save</button>
 

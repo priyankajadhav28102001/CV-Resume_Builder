@@ -210,8 +210,10 @@
                 success: function(data){
                     console.log(data);
                     $('#office').val(data.office);
-                    $('#duration').val(data.duration);
                     $('#position').val(data.position);
+                    $('#responsibilities').val(data.responsibilities);
+                    $('#startdate').val(data.startdate);
+                    $('#enddate').val(data.enddate);
                 }
             })
         })
@@ -223,9 +225,11 @@
             
             $('.update_experience_info').show()
             let office =$('#office').val()
-            let duration =$('#duration').val()
             let position =$('#position').val()
-            data={id:id, csrfmiddlewaretoken:'{{csrf_token}}', office:office, duration:duration, position:position}
+            let responsibilities =$('#responsibilities').val()
+            let startdate =$('#startdate').val()
+            let enddate =$('#enddate').val()
+            data={id:id, csrfmiddlewaretoken:'{{csrf_token}}', office:office, position:position, responsibilities:responsibilities, startdate:startdate, enddate:enddate}
 
             $.ajax({
                 url: "{% url 'update_experience'%}",

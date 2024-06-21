@@ -9,17 +9,10 @@
 </head>                          
 <body>
     <h1 class="cv_header">CURRICULUM VITAE(CV)</h1>
-    <div class="row" style="width:100%; heigth:100% ; background-color: #c7c792;">
+    <div class="row" style="width:100%; heigth:100% ;">
         {% if user_profile %}
-        {% for profile in user_profile %}
+        {% for profile in user_profile %} 
 
-        {% if profile.avator %}
-        <img src="{{profile.avator.url}}" style="width: 15%; height: 15%; margin: 5px 5px 5px 5px;" alt="no image">
-
-        {% else %}
-
-        <img src="{% static 'img/avator.png'%}" style="width:15%; height:15%; margin: 5px 5px 5px 5px;" alt="no image">
-        {% endif %}
 
         <div style="float:right; padding-right:60%;">
             <div class="basic-info">
@@ -31,8 +24,8 @@
 
         </div>
     </div>
-    <hr class="divider_line" style="color:#242424; border-top:medium double green; margin-top:150px;"/>
-    <h1 style="margin: 0; padding-top: 25px;">Biography</h1>
+    <hr class="divider_line";"margin-top:150px;"/>
+    <h1 style="margin: 0; padding-top: 25px;">About us</h1>
     <p class="bio">{{profile.bio}}</p>
 
         {% endfor %}
@@ -45,7 +38,7 @@
         <table class="table" id="table_skill">
             <thead>
                 <tr>
-                    <th style="background-color: #0087C3; width:10%;">#</th>
+                    <th style="width:10%;">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Level</th>
                 </tr>
@@ -54,7 +47,7 @@
                 {% if user_skill %}
                 {% for skill in user_skill %}
                 <tr>
-                    <th style="background-color: #0087C3; width:10%;">{{forloop.counter}}</th>
+                    <th style="width:10%;">{{forloop.counter}}</th>
                     <th scope="col">{{skill.s_name}}</th>
                     <th scope="col">{{skill.s_level}}</th>
                 </tr>
@@ -69,17 +62,17 @@
         <table class="table" id="table_skill">
             <thead>
                 <tr>
-                    <th style="background-color:#57B223; width:10%;">#</th>
-                    <th scope="col">Institution</th>
+                    <th style="width:10%;">#</th>
+                    <th scope="col">Institution Name</th>
                     <th scope="col">Year</th>
-                    <th scope="col">Award</th>
+                    <th scope="col">Award/Percentage</th>
                 </tr>
             </thead>
             <tbody>
                 {% if user_education %}
                 {% for educa in user_education %}
                 <tr>
-                    <th style="background-color: #57B223; width:10%;">{{forloop.counter}}</th>
+                    <th style="width:10%;">{{forloop.counter}}</th>
                     <th scope="col">{{educa.a_institution}}</th>
                     <th scope="col">{{educa.a_year}}</th>
                     <th scope="col">{{educa.a_award}}</th>
@@ -93,20 +86,24 @@
         <table class="table" id="table_skill">
             <thead>
                 <tr>
-                    <th style="background-color:#57B223; width:10%;">#</th>
-                    <th scope="col">Office</th>
-                    <th scope="col">Duration</th>
+                    <th style="width:10%;">#</th>
+                    <th scope="col">Office Name</th>
                     <th scope="col">Position</th>
+                    <th scope="col">Responsibilities</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
                 </tr>
             </thead>
             <tbody>
                 {% if user_experience %}
                 {% for exper in user_experience %}
                 <tr>
-                    <th style="background-color: #57B223; width:10%;">{{forloop.counter}}</th>
+                    <th style="width:10%;">{{forloop.counter}}</th>
                     <th scope="col">{{exper.e_office}}</th>
-                    <th scope="col">{{exper.e_duration}}</th>
                     <th scope="col">{{exper.e_position}}</th>
+                    <th scope="col">{{exper.e_responsibilities}}</th>
+                    <th scope="col">{{exper.e_startdate}}</th>
+                    <th scope="col">{{exper.e_enddate}}</th>
                 </tr>
                 {% endfor %}
                 {% endif %}
@@ -117,7 +114,7 @@
         <table class="table" id="table_skill">
             <thead>
                 <tr>
-                    <th style="background-color:#57B223; width:10%;">#</th>
+                    <th style="width:10%;">#</th>
                     <th scope="col">Project Name</th>
                     <th scope="col">Description</th>
                     <th scope="col">Start Date</th>
@@ -128,7 +125,7 @@
                 {% if user_project %}
                 {% for proje in user_project %}
                 <tr>
-                    <th style="background-color: #57B223; width:10%;">{{forloop.counter}}</th>
+                    <th style="width:10%;">{{forloop.counter}}</th>
                     <th scope="col">{{proje.p_projectname}}</th>
                     <th scope="col">{{proje.p_description}}</th>
                     <th scope="col">{{proje.p_startdate}}</th>
@@ -143,7 +140,7 @@
         <table class="table" id="table_skill">
             <thead>
                 <tr>
-                    <th style="background-color:#57B223; width:10%;">#</th>
+                    <th style="width:10%;">#</th>
                     <th scope="col">Certificate</th>
                     <th scope="col">Year</th>
                     
@@ -153,7 +150,7 @@
                 {% if user_certificate %}
                 {% for cer in user_certificate %}
                 <tr>
-                    <th style="background-color: #57B223; width:10%;">{{forloop.counter}}</th>
+                    <th style="width:10%;">{{forloop.counter}}</th>
                     <th scope="col">{{cer.c_certificate}}</th>
                     <th scope="col">{{cer.c_year}}</th>
                 </tr>
@@ -166,7 +163,7 @@
         <table class="table" id="table_skill">
             <thead>
                 <tr>
-                    <th style="background-color: #0087C3;">#</th>
+                    <th>#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
@@ -177,7 +174,7 @@
                 {% if user_referee %}
                 {% for ref in user_referee %}
                 <tr>
-                    <th style="background-color:#0087C3;">{{forloop.counter}}</th>
+                    <th>{{forloop.counter}}</th>
                     <th scope="col">{{ref.r_name}}</th>
                     <th scope="col">{{ref.r_email}}</th>
                     <th scope="col">{{ref.r_phone}}</th>
