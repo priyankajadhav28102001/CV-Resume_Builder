@@ -13,6 +13,7 @@ from django.urls import path
 from pdfkit import from_url
 
 
+
 # Create your views here.
 def index(request):
     #return HttpResponse('hi')

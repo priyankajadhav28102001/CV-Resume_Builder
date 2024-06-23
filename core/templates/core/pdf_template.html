@@ -5,184 +5,224 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/cv_template.css' %}">
-</head>                          
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+        .cv-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .basic-info {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .name {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .contact-info {
+            text-align: right;
+        }
+        .bio {
+            margin-top: 0;
+            line-height: 1.4;
+        }
+        .section-wrapper {
+            margin-bottom: 20px;
+        }
+        .section-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .section-details {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .section-dates {
+            font-style: italic;
+            color: #999;
+        }
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Adjust spacing between skill boxes */
+            margin-bottom: 20px;
+        }
+        .skill-box {
+            display:inline;
+            background-color: #f2f2f2;
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            color: #333;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .table th, .table td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+        .table th {
+            background-color: #f2f2f2; /* Alternate background color for table headers */
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9; /* Alternate background color for even rows */
+        }
+        .divider_line {
+            border: none;
+            border-top: 2px solid #ccc;
+            margin-top: 20px;
+        }
+    </style>
+</head>
 <body>
-    <h1 class="cv_header">CURRICULUM VITAE(CV)</h1>
-    <div class="row" style="width:100%; heigth:100% ;">
-        {% if user_profile %}
-        {% for profile in user_profile %} 
-
-
-        <div style="float:right; padding-right:60%;">
-            <div class="basic-info">
-                <h1>{{profile.fname}} {{profile.mname}} {{profile.lname}}</h1>
-                <p>{{profile.occupation}}</p>
-                <p>{{profile.country}} {{profile.region}}</p>
-                <p>{{profile.email}}, {{profile.phone}}</p>
-            </div>
-
-        </div>
-    </div>
-    <hr class="divider_line";"margin-top:150px;"/>
-    <h1 style="margin: 0; padding-top: 25px;">About us</h1>
-    <p class="bio">{{profile.bio}}</p>
-
-        {% endfor %}
-        
-        {% endif %}
-        <br/>
-        <br/>
-        <br/>
-        <h1 style="margin:0;">Skills</h1> 
-        <table class="table" id="table_skill">
-            <thead>
-                <tr>
-                    <th style="width:10%;">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Level</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if user_skill %}
-                {% for skill in user_skill %}
-                <tr>
-                    <th style="width:10%;">{{forloop.counter}}</th>
-                    <th scope="col">{{skill.s_name}}</th>
-                    <th scope="col">{{skill.s_level}}</th>
-                </tr>
-                
+    <div class="cv-wrapper">
+        <div class="basic-info">
+            {% if user_profile %}
+                {% for profile in user_profile %}
+                    <div>
+                        <h2 class="name">{{ profile.fname }} {{ profile.mname }} {{ profile.lname }}</h2>
+                        <p>{{ profile.occupation }}</p>
+                    </div>
+                    <div class="contact-info">
+                        <p>{{ profile.country }}, {{ profile.region }}</p>
+                        <p>{{ profile.email }}, +91-{{ profile.phone }}</p>
+                    </div>
                 {% endfor %}
-                {% endif %}
-            </tbody>
-
-        </table>
-
-        <h1 style="margin:0;">Education</h1>
-        <table class="table" id="table_skill">
+            {% endif %}
+        </div>
+        <hr class="divider_line">
+        <h2>About Me</h2>
+        <p class="bio">
+            {% if user_profile %}
+                {% for profile in user_profile %}
+                    {{ profile.bio }}
+                {% endfor %}
+            {% endif %}
+        </p>
+        <h2>Skills</h2>
+        <div class="skill-list">
+            {% if user_skill %}
+                {% for skill in user_skill %}
+                    <div class="skill-box">{{ skill.s_name }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <h2>Education</h2>
+        <table class="table">
             <thead>
                 <tr>
-                    <th style="width:10%;">#</th>
-                    <th scope="col">Institution Name</th>
-                    <th scope="col">Year</th>
-                    <th scope="col">Award/Percentage</th>
+                    <th></th>
+                    <th>Institution Name</th>
+                    <th>Year</th>
+                    <th>Award/Percentage</th>
                 </tr>
             </thead>
             <tbody>
                 {% if user_education %}
-                {% for educa in user_education %}
-                <tr>
-                    <th style="width:10%;">{{forloop.counter}}</th>
-                    <th scope="col">{{educa.a_institution}}</th>
-                    <th scope="col">{{educa.a_year}}</th>
-                    <th scope="col">{{educa.a_award}}</th>
-                </tr>
-                {% endfor %}
+                    {% for educa in user_education %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ educa.a_institution }}</td>
+                            <td>{{ educa.a_year }}</td>
+                            <td>{{ educa.a_award }}</td>
+                        </tr>
+                    {% endfor %}
                 {% endif %}
             </tbody>
         </table>
-
-        <h1 style="margin:0;">Experience /Internship </h1>
-        <table class="table" id="table_skill">
-            <thead>
-                <tr>
-                    <th style="width:10%;">#</th>
-                    <th scope="col">Office Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Responsibilities</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if user_experience %}
+        <div class="section-wrapper">
+            <h2>Experience / Internship</h2>
+            {% if user_experience %}
                 {% for exper in user_experience %}
-                <tr>
-                    <th style="width:10%;">{{forloop.counter}}</th>
-                    <th scope="col">{{exper.e_office}}</th>
-                    <th scope="col">{{exper.e_position}}</th>
-                    <th scope="col">{{exper.e_responsibilities}}</th>
-                    <th scope="col">{{exper.e_startdate}}</th>
-                    <th scope="col">{{exper.e_enddate}}</th>
-                </tr>
+                    <div class="section-item">
+                        <div class="section-title">{{ exper.e_office }}</div>
+                        <div class="section-details">{{ exper.e_position }}</div>
+                        <div class="section-details">{{ exper.e_responsibilities }}</div>
+                        <div class="section-dates">{{ exper.e_startdate }} - {{ exper.e_enddate }}</div>
+                    </div>
                 {% endfor %}
-                {% endif %}
-            </tbody>
-        </table>
-
-        <h1 style="margin:0;">Project</h1>
-        <table class="table" id="table_skill">
-            <thead>
-                <tr>
-                    <th style="width:10%;">#</th>
-                    <th scope="col">Project Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if user_project %}
+            {% endif %}
+        </div>
+        <h2>Projects</h2>
+        <div class="section-wrapper">
+            {% if user_project %}
                 {% for proje in user_project %}
-                <tr>
-                    <th style="width:10%;">{{forloop.counter}}</th>
-                    <th scope="col">{{proje.p_projectname}}</th>
-                    <th scope="col">{{proje.p_description}}</th>
-                    <th scope="col">{{proje.p_startdate}}</th>
-                    <th scope="col">{{proje.p_enddate}}</th>
-                </tr>
+                    <div class="section-item">
+                        <div class="section-title">{{ proje.p_projectname }}</div>
+                        <div class="section-details">{{ proje.p_description }}</div>
+                        <div class="section-dates">{{ proje.p_startdate }} - {{ proje.p_enddate }}</div>
+                    </div>
                 {% endfor %}
-                {% endif %}
-            </tbody>
-        </table>
-
-        <h1 style="margin:0;">Certificate</h1>
-        <table class="table" id="table_skill">
+            {% endif %}
+        </div>
+        <h2>Certificates</h2>
+        <table class="table">
             <thead>
                 <tr>
-                    <th style="width:10%;">#</th>
-                    <th scope="col">Certificate</th>
-                    <th scope="col">Year</th>
-                    
+                    <th></th>
+                    <th>Certificate</th>
+                    <th>Year</th>
                 </tr>
             </thead>
             <tbody>
                 {% if user_certificate %}
-                {% for cer in user_certificate %}
-                <tr>
-                    <th style="width:10%;">{{forloop.counter}}</th>
-                    <th scope="col">{{cer.c_certificate}}</th>
-                    <th scope="col">{{cer.c_year}}</th>
-                </tr>
-                {% endfor %}
+                    {% for cer in user_certificate %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ cer.c_certificate }}</td>
+                            <td>{{ cer.c_year }}</td>
+                        </tr>
+                    {% endfor %}
                 {% endif %}
             </tbody>
         </table>
-
-        <h1 style="margin:0;">Referees</h1> 
-        <table class="table" id="table_skill">
+        <h2>Referees</h2>
+        <table class="table">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
-
+                    <th></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
                 </tr>
             </thead>
             <tbody>
                 {% if user_referee %}
-                {% for ref in user_referee %}
-                <tr>
-                    <th>{{forloop.counter}}</th>
-                    <th scope="col">{{ref.r_name}}</th>
-                    <th scope="col">{{ref.r_email}}</th>
-                    <th scope="col">{{ref.r_phone}}</th>
-                </tr> 
-                {% endfor %}
+                    {% for ref in user_referee %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ ref.r_name }}</td>
+                            <td>{{ ref.r_email }}</td>
+                            <td>{{ ref.r_phone }}</td>
+                        </tr>
+                    {% endfor %}
                 {% endif %}
             </tbody>
         </table>
-        <p style="padding-bottom: 150px;"></p>
+    </div>
 </body>
 </html>
